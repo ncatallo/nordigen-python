@@ -80,3 +80,27 @@ class InstitutionsApi:
                 return bank["id"]
 
         raise ValueError(f"Institution: {institution} is not found")
+ 
+    def get_institution_by_name(
+        self, country: str, institution: str
+    ) -> Institutions:
+        """
+        Get institution object by institution name.
+
+        Args:
+            country (str): Two-character country code
+            institution (str): Institution name (ex: Revolut)
+
+        Raises:
+            ValueError: If institution with given name is not found
+
+        Returns:
+            Institutions: Institution
+        """
+        institutions = self.get_institutions(country)
+
+        for bank in institutions:
+            if institution.lower() in bank["name"].lower():
+                return bank
+
+        raise ValueError(f"Institution: {institution} is not found")
